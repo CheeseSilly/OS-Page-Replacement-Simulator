@@ -8,24 +8,6 @@
     <script>
         AOS.init();
     </script>
-
-
-    <!-- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const seq = "{{ seq }}";
-        const fsize = "{{ fsize }}";
-        const iframeSrc = `http://localhost:3000?pageReferences=${encodeURIComponent(seq)}&frameCount=${encodeURIComponent(fsize)}`;
-        document.getElementById('resultIframe').src = iframeSrc;
-    });
-    </script> -->
-
-
-    <div style="display: flex; justify-content: center; margin: 20px 0;">
-        <iframe src="https://cheesesilly.github.io/OS-Page-Replacement-Simulator/?pageReferences={% for s in sequence %} {{s}} {%endfor%}&frameCount={{frameAmount}}" frameborder="0" style="width: 80%; height: 600px;"></iframe>
-    </div>
-
-    
-
     <div data-aos="fade-right" data-aos-duration="200"style="text-align: center;">
         <h1 data-aos="fade-right" data-aos-duration="500">Results</h1>
         <h2 data-aos="fade-right" data-aos-duration="800">Sequence: {% for s in sequence %} {{s}} {%endfor%}</h2>
@@ -46,7 +28,7 @@
     <table style="margin: auto; font-size: 1.5em;font-weight: bolder;">
         <tr>
         {% for s in sequence %}                
-        <td style="padding: 13px; color: #0066cc;">            
+        <td style="padding: 20px; color: #0066cc;text-align: center;">            
             {{s}}            
         </td>
         {% endfor %}
@@ -79,7 +61,7 @@
         <tr>
         {% for s in sequence %} 
                
-        <td style="padding: 13px; color: #0066cc;">            
+        <td style="padding: 20px; color: #0066cc;text-align: center;">            
             {{s}}            
         </td>
         {% endfor %}
@@ -106,7 +88,7 @@
         <tr>
         {% for s in sequence %} 
                
-        <td style="padding: 13px; color: #0066cc;">            
+        <td style="padding: 20px; color: #0066cc; text-align: center;">            
             {{s}}            
         </td>
         {% endfor %}
@@ -128,8 +110,6 @@
     <p id="ratio">Hit Rate: {{optratio}}%</p>
   
 </div>
-
-
     <hr>
 
     {% endblock %}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Replacement Simulator</title>
+  <!-- Include Tailwind CSS -->
+  <link href="output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+  <div class="container mx-auto p-4">
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="mb-4 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded">
+      Toggle Dark Mode
+    </button>
+
+    <!-- Edited test-->
+    <!-- <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        seq: params.get('pageReferences'),
+        fsize: params.get('frameCount'),
+        algorithm: params.get('algorithm')
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const { seq, fsize, algorithm } = getQueryParams();
+      if (seq) {
+        document.getElementById('pageReferences').value = seq;
+      }
+      if (fsize) {
+        document.getElementById('frameCount').value = fsize;
+      }
+      if (algorithm) {
+        document.getElementById('algorithm').value = algorithm;
+      }
+    });
+  </script> -->
+
+
+
+
+    <!-- Input Section -->
+    <section id="inputSection" class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Simulation Configuration</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Page References Input -->
+        <div>
+          <label for="pageReferences" class="block mb-1">Page References:</label>
+          <input type="text" id="pageReferences" class="w-full p-2 border rounded" placeholder="e.g., 7 0 1 2 0 3 0 4">
+          <p id="pageReferencesError" class="error-message">Please enter a valid sequence of numbers.</p>
+        </div>
+        <!-- Frame Count Input -->
+        <div>
+          <label for="frameCount" class="block mb-1">Number of Frames:</label>
+          <input type="number" id="frameCount" class="w-full p-2 border rounded" min="1" placeholder="e.g., 3">
+          <p id="frameCountError" class="error-message">Please enter a valid number of frames.</p>
+        </div>
+        <!-- Algorithm Selection -->
+        <div>
+          <label for="algorithm" class="block mb-1">Replacement Algorithm:</label>
+          <select id="algorithm" class="w-full p-2 border rounded">
+            <option value="FIFO">FIFO</option>
+            <option value="ModifiedFIFO">Modified FIFO (Second-Chance)</option>
+            <option value="LRU">LRU</option>
+            <option value="Optimal">Optimal</option>
+          </select>
+        </div>
+      </div>
+      <button id="startSimulation" class="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
+        Start Simulation
+      </button>
+    </section>
+
+    <!-- Edited for auto-fill and connected with Django-->
+      <script>
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        seq: params.get('pageReferences'),
+        fsize: params.get('frameCount'),
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const { seq, fsize, algorithm } = getQueryParams();
+      if (seq) {
+        document.getElementById('pageReferences').value = seq;
+      }
+      if (fsize) {
+        document.getElementById('frameCount').value = fsize;
+      }
+    });
+  </script>
+
+
+    <!-- Simulation Controls -->
+    <section id="controlsSection" class="mb-6">
+      <button id="prevStep" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded mr-2" disabled>
+        Previous Step
+      </button>
+      <button id="nextStep" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded mr-2" disabled>
+        Next Step
+      </button>
+      <button id="playPause" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded" disabled>
+        Play
+      </button>
+    </section>
+
+    <!-- Visualization Area -->
+    <section id="visualizationArea" class="mb-6">
+      <!-- The simulation table will be generated here -->
+    </section>
+
+    <!-- Narration Text -->
+    <section id="narrationSection" class="mb-6">
+      <p id="narrationText" class="italic">Awaiting simulation...</p>
+    </section>
+
+    <!-- AI Feedback we will not use it:) -->
+    <!-- <section id="feedbackSection" class="mb-6">
+      <h3 class="text-xl font-semibold mb-2">AI Feedback:</h3>
+      <p id="aiFeedback" class="p-4 bg-gray-200 dark:bg-gray-800 rounded"></p>
+    </section> -->
+
+    <!-- Legend Section -->
+    <section id="legend" class="mb-6">
+      <h3 class="text-lg font-semibold">Legend:</h3>
+      <ul class="list-disc list-inside">
+        <li><span class="inline-block w-4 h-4 page-fault mr-2"></span>Page Fault (Page fault occurred and loaded into memory)</li>
+        <li><span class="inline-block w-4 h-4 page-hit mr-2"></span>Page Hit (Page was already in memory)</li>
+      </ul>
+    </section>
+
+    <!-- Performance Chart Section -->
+    <section id="performanceChartSection" class="mb-6 p-4 border rounded hidden">
+      <h2 class="text-xl font-semibold mb-4">Performance Chart</h2>
+      <canvas id="performanceChart" width="800" height="400"></canvas>
+      <button id="downloadChartBtn" class="mt-4 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded">
+        Download Chart
+      </button>
+    </section>
+
+    <!-- Show Chart Button -->
+    <button id="showChartBtn" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">
+      Show Performance Chart
+    </button>
+  </div>
+
+  <!-- Include Tippy.js and Popper.js -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="chart.js"></script>
+</body>
+</html>

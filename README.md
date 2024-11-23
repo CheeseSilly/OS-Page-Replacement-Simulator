@@ -4,6 +4,8 @@
 
 This is the 4th (also the final) **Experiment in Collaboration** for Operating System course of IMU.
 
+这里是[中文版](https://github.com/log1011z/OS-Page-Replacement-Simulator)
+
 ## About this Project
 
 An interactive web application that visualizes page replacement algorithms in operating systems,especially Optimal,LRU,FIFO,
